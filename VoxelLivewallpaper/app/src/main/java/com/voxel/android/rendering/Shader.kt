@@ -1,8 +1,13 @@
 package com.voxel.android.rendering
 
+import android.content.Context
 import android.opengl.GLES31
 import android.util.Log
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 import java.lang.IllegalStateException
+import java.util.*
 
 /**
  * A class abstracting the concept of an OpenGL shader object.
@@ -67,6 +72,33 @@ class Shader (val type: ShaderType)
 
             // Shader is now fully compiled and ready for use
             return shader
+        }
+
+        /**
+         * Create shader from source file in resources
+         *
+         * @param type Shader type
+         * @param ctx App context
+         * @param id Resource ID
+         */
+        fun FromResource(type: ShaderType, ctx: Context, id: Int): Shader
+        {
+            // Open resource input stream
+            val stream = ctx.resources.openRawResource(id)
+
+            try
+            {
+                // Create a character-based reader to read the whole source file
+                val reader = BufferedReader(InputStreamReader(stream))
+
+                // Delegate to other shader construction method
+                return FromText(type, reader.readText())
+            }
+            catch(ex: IOException)
+            {
+                Log.e("Shader", "Failed to load shader from resource: ${ex.message}")
+                throw ex
+            }
         }
     }
 
