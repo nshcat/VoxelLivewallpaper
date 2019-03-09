@@ -61,6 +61,19 @@ class ShaderProgram (vararg shaders: Shader)
     }
 
     /**
+     * Apply given render parameters (mode, view and projection matrices) to this shader program.
+     * Note that it needs to be in use, otherwise this operation has no effect.
+     *
+     * @param rp Render parameters to apply to this shader program
+     */
+    fun applyParameters(rp: RenderParams)
+    {
+        uniformMat4f(this, "projection", rp.projection)
+        uniformMat4f(this, "view", rp.view)
+        uniformMat4f(this, "model", rp.model)
+    }
+
+    /**
      * Attach given shader to this program object.
      */
     protected fun attachShader(shader: Shader)
