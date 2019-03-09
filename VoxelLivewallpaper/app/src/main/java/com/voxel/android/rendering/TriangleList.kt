@@ -136,16 +136,18 @@ class TriangleList
         val sizeInBytes = sizeInFloats * 4
 
         // Create a float buffer for all vertex data
-        val dataBuffer = ByteBuffer.allocateDirect(sizeInFloats).asFloatBuffer()
+        val byteBuffer = ByteBuffer.allocateDirect(sizeInFloats)
+        val floatBuffer = byteBuffer.asFloatBuffer()
+
 
         // Save all vertex data to buffer
-        this.vertices.forEach({ x -> x.get(dataBuffer)})
+        this.vertices.forEach({ x -> x.get(floatBuffer)})
 
         // Fill buffer with data
         GLES31.glBufferData(
                 GLES31.GL_ARRAY_BUFFER,
                 sizeInBytes,
-                dataBuffer,
+                byteBuffer,
                 GLES31.GL_STATIC_DRAW
         )
 
