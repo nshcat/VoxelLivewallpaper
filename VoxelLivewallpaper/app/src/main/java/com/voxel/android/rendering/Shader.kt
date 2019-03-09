@@ -18,6 +18,14 @@ class Shader (val type: ShaderType)
         protected set
 
     /**
+     * The shader compilation log. In the case of failed shader compilation this will
+     * contain any error message emitted by the shader compiler. Warnings are also stored
+     * in here.
+     */
+    var log: String = ""
+        protected set
+
+    /**
      * Shader object initialisation
      */
     init
@@ -85,14 +93,18 @@ class Shader (val type: ShaderType)
         // Try to compile the shader
         GLES31.glCompileShader(this.handle)
 
+        // Retrieve the shader compilation log. This might contain messages no matter
+        // the compilation status
+        this.log = GLES31.glGetShaderInfoLog(this.handle)
+
         // Check the compilation status to determine if compilation was successful
         val status = IntArray(1)
         GLES31.glGetShaderiv(this.handle, GLES31.GL_COMPILE_STATUS, status, 0)
 
-        if(status[0] == GLES31.GL_NONE)
+        if(status[0] == GLES31.GL_FALSE)
         {
             // Something went wrong
-            Log.e("Shader", "Failed to compiler shader: " + GLES31.glGetShaderInfoLog(this.handle))
+            Log.e("Shader", "Failed to compiler shader: " + this.log)
             GLES31.glDeleteShader(this.handle)
             throw IllegalStateException("Shader compilation failed")
         }
