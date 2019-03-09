@@ -53,6 +53,14 @@ class ShaderProgram (vararg shaders: Shader)
     }
 
     /**
+     * Instruct the OpenGL runtime to use this program for rendering
+     */
+    fun use()
+    {
+        GLES31.glUseProgram(this.handle)
+    }
+
+    /**
      * Attach given shader to this program object.
      */
     protected fun attachShader(shader: Shader)
