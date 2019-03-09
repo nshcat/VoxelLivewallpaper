@@ -103,6 +103,9 @@ class TriangleList
             throw java.lang.IllegalStateException("Can't upload triangle list if number of vertices is not a multiple of three")
         }
 
+        // The size of a single float in bytes
+        val SIZE_FLOAT = 4
+
         // Create the VAO
         val vaoBuffer = IntArray(1)
         GLES31.glGenVertexArrays(1, vaoBuffer, 0)
@@ -133,15 +136,14 @@ class TriangleList
         val sizeInFloats = Vertex.SIZE * this.vertices.size
 
         // Size of whole vertex data in bytes
-        val sizeInBytes = sizeInFloats * 4
+        val sizeInBytes = sizeInFloats * SIZE_FLOAT
 
         // Create a float buffer for all vertex data
         val byteBuffer = ByteBuffer.allocateDirect(sizeInFloats)
         val floatBuffer = byteBuffer.asFloatBuffer()
 
-
         // Save all vertex data to buffer
-        this.vertices.forEach({ x -> x.get(floatBuffer)})
+        this.vertices.forEach { it.get(floatBuffer) }
 
         // Fill buffer with data
         GLES31.glBufferData(
@@ -155,19 +157,19 @@ class TriangleList
         // Position
         GLES31.glVertexAttribBinding(0, 0)
         GLES31.glEnableVertexAttribArray(0)
-        GLES31.glVertexAttribFormat(0, 3, GLES31.GL_FLOAT, false, Vertex.OFFSET_POSITION * 4)
+        GLES31.glVertexAttribFormat(0, 3, GLES31.GL_FLOAT, false, Vertex.OFFSET_POSITION * SIZE_FLOAT)
 
         // Color
         GLES31.glVertexAttribBinding(1, 0)
         GLES31.glEnableVertexAttribArray(1)
-        GLES31.glVertexAttribFormat(1, 4, GLES31.GL_FLOAT, false, Vertex.OFFSET_COLOR * 4)
+        GLES31.glVertexAttribFormat(1, 4, GLES31.GL_FLOAT, false, Vertex.OFFSET_COLOR * SIZE_FLOAT)
 
         // Normal vector
         GLES31.glVertexAttribBinding(2, 0)
         GLES31.glEnableVertexAttribArray(2)
-        GLES31.glVertexAttribFormat(2, 3, GLES31.GL_FLOAT, false, Vertex.OFFSET_NORMAL * 4)
+        GLES31.glVertexAttribFormat(2, 3, GLES31.GL_FLOAT, false, Vertex.OFFSET_NORMAL * SIZE_FLOAT)
 
-        GLES31.glBindVertexBuffer(0, this.vboHandle, 0, Vertex.SIZE * 4)
+        GLES31.glBindVertexBuffer(0, this.vboHandle, 0, Vertex.SIZE * SIZE_FLOAT)
 
         // Upload finished. Mark as ready
         this.isReady = true
