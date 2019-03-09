@@ -6,12 +6,4 @@ package com.voxel.android.rendering
  *
  * @property program The shader program to use
  */
-abstract class Mesh (val program: ShaderProgram)
-{
-    /**
-     * Render this mesh to screen using given rendering parameters
-     *
-     * @param params Rendering parameters to use
-     */
-    abstract fun render(params: RenderParams)
-}
+abstract class Mesh (val program: ShaderProgram): Renderable
