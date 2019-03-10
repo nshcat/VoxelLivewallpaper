@@ -2,6 +2,7 @@ package com.voxel.android.rendering
 
 import org.joml.Matrix4f
 import org.joml.Vector3f
+import org.joml.Vector4f
 
 /**
  * Matrix multiplication for 4x4 matrices
@@ -61,4 +62,19 @@ operator fun Vector3f.times(other: Float): Vector3f
     this.mul(other, result)
 
     return result
+}
+
+/**
+ * Matrix vector multiplication
+ */
+operator fun Matrix4f.times(other: Vector3f): Vector3f
+{
+    // Create 4d vector in homogenous coordinates
+    val vec4 = Vector4f(other, 1.0f)
+
+    // Perform this * vec4 and store in vec4
+    vec4.mul(this)
+
+    // Discard fourth entry
+    return Vector3f(vec4.x, vec4.y, vec4.z)
 }
