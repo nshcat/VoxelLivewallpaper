@@ -1,6 +1,7 @@
 package com.voxel.android.rendering
 
 import org.joml.Vector3f
+import org.joml.Vector4f
 
 /**
  * A mesh containing a single cube.
@@ -13,10 +14,24 @@ class CubeMesh (var position: Vector3f = Vector3f()): Mesh(SimpleMaterial())
     protected val vertices = TriangleList()
 
     /**
+     * Populate the vertex list with all voxel face vertices
+     */
+    init
+    {
+        enumValues<VoxelFace>().forEach {
+            this.vertices.addVertices(it.toVertices(Vector4f(1f, 1f, 1f, 1f)))
+        }
+    }
+
+    /**
      * Render the cube mesh to screen
      */
     override fun render(params: RenderParams)
     {
+        // Build mesh if needed
+        if(!this.vertices.isReady)
+            this.vertices.upload()
+
         // Save current model matrix
         params.pushMatrix()
 

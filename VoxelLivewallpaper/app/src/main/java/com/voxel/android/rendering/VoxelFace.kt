@@ -75,6 +75,20 @@ enum class VoxelFace(private val vertexData: Collection<VertexData>)
     private class VertexData(val position: Vector3f, val normal: Vector3f)
 
 
+    /**
+     * Retrieve the vertices associated with this voxel face. This is most often used
+     * to create a voxel mesh by adding the vertices to a triangle list.
+
+     * @param translation Translation to apply to the vertices
+     * @param color Color of the vertices
+     * @return List of vertices for the given face
+     */
+    fun toVertices(color: Vector4f, translation: Vector3f = Vector3f()): VertexCollection
+    {
+        return toVertices(this, color, translation)
+    }
+
+
     companion object
     {
         /**
