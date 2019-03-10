@@ -16,47 +16,6 @@ import java.nio.IntBuffer
 class TriangleList
 {
     /**
-     * A single vertex, containing position, color and normal vector
-     */
-    class Vertex (val position: Vector3f, val color: Vector4f, val normal: Vector3f)
-    {
-        companion object
-        {
-            /**
-             * The total size of a vertex, in floats
-             */
-            const val SIZE = 10
-
-            /**
-             * Offset of position vector, in floats
-             */
-            const val OFFSET_POSITION = 0
-
-            /**
-             * Offset of color vector, in floats
-             */
-            const val OFFSET_COLOR = 3
-
-            /**
-             * Offset of normal vector, in floats
-             */
-            const val OFFSET_NORMAL = 7
-        }
-
-        /**
-         * Transfer vertex data into given float buffer for upload to GPU.
-         *
-         * @param buffer Target float buffer
-         */
-        fun get(buffer: FloatBuffer)
-        {
-            this.position.get(buffer)
-            this.color.get(buffer)
-            this.normal.get(buffer)
-        }
-    }
-
-    /**
      * Reserve space for given number of triangles to avoid large number
      * of reallocations
      *
@@ -82,6 +41,22 @@ class TriangleList
         }
 
         this.vertices.add(vtx)
+    }
+
+    /**
+     * Add given vertices to the triangle list.
+     *
+     * @param vtxs The vertices to add
+     */
+    fun addVertices(vtxs: VertexCollection)
+    {
+        // If the list is already ready, no more vertices can be added
+        if(this.isReady)
+        {
+            throw IllegalStateException("Can't add vertices to TriangleList that was already built")
+        }
+
+        this.vertices.addAll(vtxs)
     }
 
     /**
