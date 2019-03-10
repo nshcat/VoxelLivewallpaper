@@ -1,6 +1,8 @@
 package com.voxel.android.rendering
 
+import org.joml.Matrix3f
 import org.joml.Matrix4f
+import org.joml.Vector3f
 import java.util.*
 
 /**
@@ -47,5 +49,15 @@ class RenderParams (val view: Matrix4f,  val projection: Matrix4f)
     {
         // Save current model matrix on matrix stack
         this.stack.push(this.model)
+    }
+
+    /**
+     * Add a translation to the current model matrix
+     *
+     * @vec Vector to translate by
+     */
+    fun translate(vec: Vector3f)
+    {
+        model *= Matrix4f().translation(vec)
     }
 }
