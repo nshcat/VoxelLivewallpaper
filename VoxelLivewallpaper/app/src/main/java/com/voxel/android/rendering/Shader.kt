@@ -6,7 +6,9 @@ import android.util.Log
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.lang.Exception
 import java.lang.IllegalStateException
+import java.nio.Buffer
 import java.util.*
 
 /**
@@ -99,6 +101,25 @@ class Shader (val type: ShaderType)
                 Log.e("Shader", "Failed to load shader from resource: ${ex.message}")
                 throw ex
             }
+        }
+
+        /**
+         * Create shader from source file in resource folder "res".. This avoids the usage of
+         * the context. This might not work with all Android SDKs!
+         *
+         * @param type Shader type
+         * @param path The path to the resource file holding the source code. Has to be in /res/!
+         */
+        fun FromResource(type: ShaderType, path: String): Shader
+        {
+            // Try to retrieve resource stream
+            val stream = ::Shader.javaClass.classLoader.getResourceAsStream(path)
+
+            // Create a reader
+            val reader = BufferedReader(InputStreamReader(stream))
+
+            // Delegate to other shader construction method
+            return FromText(type, reader.readText())
         }
     }
 
