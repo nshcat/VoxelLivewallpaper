@@ -1,5 +1,6 @@
 package com.voxel.android.rendering
 
+import com.voxel.android.application.ScreenDimensions
 import org.joml.Vector3f
 import org.joml.Matrix4f
 

@@ -1,4 +1,4 @@
-package com.voxel.android.rendering
+package com.voxel.android.application
 
 /**
  * A class encapsulating the dimensions of the screen that is the current rendering target.

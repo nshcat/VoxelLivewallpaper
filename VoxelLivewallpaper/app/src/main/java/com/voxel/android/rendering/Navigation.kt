@@ -11,7 +11,6 @@ interface Navigation
      */
     fun update(delta: Double)
 
-
     /**
      * Perform first time setup for given Camera instance [c]
      */
