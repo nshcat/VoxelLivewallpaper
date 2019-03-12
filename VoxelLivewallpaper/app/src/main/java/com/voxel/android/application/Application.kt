@@ -14,6 +14,8 @@ import javax.microedition.khronos.opengles.GL10
  */
 abstract class Application (protected val context: Context): GLSurfaceView.Renderer
 {
+    // TODO: Implement touch input via this class.
+
     /**
      * The last frame time, in milliseconds. This is used to calculate the delta time supplied
      * to [onFrame].
@@ -25,6 +27,11 @@ abstract class Application (protected val context: Context): GLSurfaceView.Rende
      * has to be avoided when calculating the delta time for the call to [onFrame].
      */
     private var isFirstFrame: Boolean = true
+
+    /**
+     * The current dimensions of the screen
+     */
+    protected var screenDimensions: ScreenDimensions = ScreenDimensions.empty()
 
     /**
      * This method is called any time the device screen properties change.
@@ -100,7 +107,15 @@ abstract class Application (protected val context: Context): GLSurfaceView.Rende
      */
     override fun onSurfaceChanged(p0: GL10?, width: Int, height: Int)
     {
-        this.onScreenChanged(ScreenDimensions(width, height))
+        // Create screen dimensions instance
+        val dimensions = ScreenDimensions(width, height)
+
+        // Only apply if they are not empty
+        if(!dimensions.isEmpty())
+        {
+            this.screenDimensions = dimensions
+            this.onScreenChanged(this.screenDimensions)
+        }
     }
 
     //endregion
