@@ -23,7 +23,7 @@ abstract class Application (protected val context: Context): GLSurfaceView.Rende
     private var lastFrameTime: Long = 0
 
     /**
-     * Whether the comming frame is the first frame. This is important since division by zero
+     * Whether the next frame is the first frame. This is important since division by zero
      * has to be avoided when calculating the delta time for the call to [onFrame].
      */
     private var isFirstFrame: Boolean = true

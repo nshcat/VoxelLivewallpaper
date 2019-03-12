@@ -1,5 +1,8 @@
 #version 310 es
 
+
+precision highp float;
+
 in vec4 fragmentColor;
 in vec3 fragmentPosition;
 in vec3 fragmentNormal;

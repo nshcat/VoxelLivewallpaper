@@ -22,7 +22,7 @@
 
         <service
             android:name="com.voxel.android.livewallpaper.VoxelWallpaperService"
-            android:label="PhoenixPen Live Wallpaper"
+            android:label="Voxel Livewallpaper"
             android:permission="android.permission.BIND_WALLPAPER" >
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
@@ -36,7 +36,7 @@
         <activity
             android:name="com.voxel.android.livewallpaper.WallpaperSettings"
             android:exported="true"
-            android:label="PhoenixPen Settings"
+            android:label="Voxel Livewallpaper Settings"
             android:permission="android.permission.BIND_WALLPAPER"
             android:theme="@style/WallpaperSettingsLight">
             <intent-filter>

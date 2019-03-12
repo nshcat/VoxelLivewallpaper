@@ -1,6 +1,7 @@
 package com.voxel.android.rendering
 
 import android.opengl.GLES31
+import android.util.Log
 import org.joml.Vector3f
 import org.joml.Vector4f
 import java.nio.ByteBuffer
@@ -96,7 +97,7 @@ class TriangleList
 
         // Create the VBO
         val vboBuffer = IntArray(1)
-        GLES31.glGenBuffers(1, vboBuffer, 1)
+        GLES31.glGenBuffers(1, vboBuffer, 0)
         this.vboHandle = vboBuffer[0]
 
         if(this.vboHandle == GLES31.GL_NONE)
@@ -119,6 +120,8 @@ class TriangleList
 
         // Save all vertex data to buffer
         this.vertices.forEach { it.get(floatBuffer) }
+
+        Log.d("TriangleList", "Expected size: $sizeInBytes, actual size: ${byteBuffer.remaining()}")
 
         // Fill buffer with data
         GLES31.glBufferData(

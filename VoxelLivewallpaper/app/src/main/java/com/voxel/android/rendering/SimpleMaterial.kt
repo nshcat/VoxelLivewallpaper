@@ -21,8 +21,8 @@ class SimpleMaterial: Material(simpleShaderProgram)
          * The shader program this will be used for this material
          */
         private val simpleShaderProgram = ShaderProgram(
-                Shader.FromResource(ShaderType.FragmentShader, "raw/simple_fs.glsl"),
-                Shader.FromResource(ShaderType.VertexShader, "raw/simple_vs.glsl")
+                Shader.FromResource(ShaderType.FragmentShader, "res/raw/simple_fs.glsl"),
+                Shader.FromResource(ShaderType.VertexShader, "res/raw/simple_vs.glsl")
         )
     }
 }
