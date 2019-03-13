@@ -61,7 +61,7 @@ class Camera (var position: Vector3f,
     fun refreshProjection(screenDimensions: ScreenDimensions)
     {
         // Overwrite current projection matrix
-        this.projection.setPerspective(this.fov, screenDimensions.aspectRatio, 0f, 100f)
+        this.projection.setPerspective(this.fov, screenDimensions.aspectRatio, 0.1f, 100f)
     }
 
     /**

@@ -115,11 +115,13 @@ class TriangleList
         val sizeInBytes = sizeInFloats * SIZE_FLOAT
 
         // Create a float buffer for all vertex data
-        val byteBuffer = ByteBuffer.allocateDirect(sizeInFloats)
+        val byteBuffer = ByteBuffer.allocateDirect(sizeInBytes)
         val floatBuffer = byteBuffer.asFloatBuffer()
 
         // Save all vertex data to buffer
         this.vertices.forEach { it.get(floatBuffer) }
+
+        byteBuffer.position(0)
 
         Log.d("TriangleList", "Expected size: $sizeInBytes, actual size: ${byteBuffer.remaining()}")
 

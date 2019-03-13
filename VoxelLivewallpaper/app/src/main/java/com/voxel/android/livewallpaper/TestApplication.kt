@@ -37,6 +37,7 @@ class TestApplication (context: Context): Application(context)
         {
             // Force the screen to resize
             this.screen.updateDimensions(screenDimensions)
+            this.camera.refreshProjection(screenDimensions)
         }
     }
 

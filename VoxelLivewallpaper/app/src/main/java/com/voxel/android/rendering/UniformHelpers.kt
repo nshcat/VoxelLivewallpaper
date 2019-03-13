@@ -5,6 +5,7 @@ import android.util.Log
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.joml.Vector4f
+import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
 /**
@@ -24,6 +25,8 @@ fun uniformMat4f(program: ShaderProgram, name: String, mat: Matrix4f)
 
     // Save matrix contents
     mat.get(buffer)
+
+    buffer.position(0)
 
     // Upload contents
     GLES31.glUniformMatrix4fv(location, 1, false, buffer)
@@ -81,7 +84,8 @@ fun uniformVec4f(program: ShaderProgram, name: String, vec: Vector4f)
  */
 private fun allocateFloatBuffer(size: Int): FloatBuffer
 {
-    return FloatBuffer.allocate(size)
+    val buf = ByteBuffer.allocateDirect(size * 4)
+    return buf.asFloatBuffer()
 }
 
 /**
