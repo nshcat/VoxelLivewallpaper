@@ -1,6 +1,6 @@
 #version 310 es
 
-precision highp float;
+precision mediump float;
 
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec4 vertexColor;
@@ -16,7 +16,7 @@ uniform mat4 model;
 
 void main()
 {
-    fragmentColor = vertexColor; 
+    fragmentColor = vertexColor;
     vec4 vPos = vec4(vertexPosition, 1.0f);
     fragmentPosition = (view * model * vPos).xyz;
     fragmentNormal = vertexNormal;

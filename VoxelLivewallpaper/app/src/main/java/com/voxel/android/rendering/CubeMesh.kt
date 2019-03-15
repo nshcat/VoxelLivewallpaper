@@ -19,7 +19,7 @@ class CubeMesh (var position: Vector3f = Vector3f()): Mesh(SimpleMaterial())
     init
     {
         enumValues<VoxelFace>().forEach {
-            this.vertices.addVertices(it.toVertices(Vector4f(1f, 1f, 1f, 1f)))
+            this.vertices.addVertices(it.toVertices(Vector4f(1f, 0f, 0f, 1f)))
         }
     }
 

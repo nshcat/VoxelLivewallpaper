@@ -4,6 +4,7 @@ import android.content.Context
 import com.voxel.android.application.Application
 import com.voxel.android.application.ScreenDimensions
 import com.voxel.android.rendering.*
+import junit.framework.Test
 import org.joml.Vector3f
 import java.util.*
 
@@ -24,7 +25,7 @@ class TestApplication (context: Context): Application(context)
      * The camera that will capture our scene
      */
     private val camera: Camera = Camera(
-            Vector3f(3f, 0f, 0f),
+            Vector3f(5f, 5f, 0f),
             Vector3f(),
             Vector3f(Axis.Y),
             90f,

@@ -1,7 +1,6 @@
 #version 310 es
 
-
-precision highp float;
+precision mediump float;
 
 in vec4 fragmentColor;
 in vec3 fragmentPosition;
@@ -13,7 +12,7 @@ void main()
     vec3 n = normalize(fragmentNormal);
     if (!gl_FrontFacing)
         n = -n;
-        
-    color = fragmentColor * (1.0 + dot(normalize(vec3(1.0) - fragmentPosition), n));
-    //color = fragmentColor;
+
+    color = fragmentColor;
+    //color = fragmentColor * (1.0 + dot(normalize(vec3(1.0) - fragmentPosition), n));
 }

@@ -31,18 +31,6 @@ class Vertex (val position: Vector3f, val color: Vector4f, val normal: Vector3f)
          */
         const val OFFSET_NORMAL = 7
     }
-
-    /**
-     * Transfer vertex data into given float buffer for upload to GPU.
-     *
-     * @param buffer Target float buffer
-     */
-    fun get(buffer: FloatBuffer)
-    {
-        this.position.get(buffer)
-        this.color.get(buffer)
-        this.normal.get(buffer)
-    }
 }
 
 /**
