@@ -4,10 +4,7 @@ package com.voxel.android.rendering
  * A simple material that ignores all light sources in the scene and applies a faux lighting
  * to all meshed rendered with it. This should only be used for testing
  */
-class SimpleMaterial: Material(ShaderProgram(
-        Shader.FromResource(ShaderType.FragmentShader, "res/raw/simple_fs.glsl"),
-        Shader.FromResource(ShaderType.VertexShader, "res/raw/simple_vs.glsl")
-))
+class SimpleMaterial: Material(simpleShaderProgram)
 {
     /**
      * Apply rendering parameters. This type of material does not have any attributes
@@ -18,8 +15,7 @@ class SimpleMaterial: Material(ShaderProgram(
         this.shaderProgram.applyParameters(params)
     }
 
-
-    /*companion object
+    companion object
     {
         /**
          * The shader program this will be used for this material
@@ -28,5 +24,5 @@ class SimpleMaterial: Material(ShaderProgram(
                 Shader.FromResource(ShaderType.FragmentShader, "res/raw/simple_fs.glsl"),
                 Shader.FromResource(ShaderType.VertexShader, "res/raw/simple_vs.glsl")
         )
-    }*/
+    }
 }
