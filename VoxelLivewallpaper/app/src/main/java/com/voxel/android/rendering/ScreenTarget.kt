@@ -15,6 +15,9 @@ class ScreenTarget: RenderTarget
     {
         // Update the viewport
         GLES31.glViewport(0, 0, renderDimensions.width, renderDimensions.height)
+
+        // Activate depth testing
+        GLES31.glEnable(GLES31.GL_DEPTH_TEST)
     }
 
     /**

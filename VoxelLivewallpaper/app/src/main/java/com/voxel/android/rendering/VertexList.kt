@@ -10,12 +10,13 @@ import java.nio.FloatBuffer
 import java.nio.IntBuffer
 
 /**
- * A class implementing a list of triangles on the GPU using VAO and VBO.
+ * A class implementing a list of vertices on the GPU using VAO and VBO.
+ * The user can decide how the vertices are rendered by selecting a primitive type.
  * Note that this class is not useful to render something on its own, since
  * it doesnt manage a shader program that is needed for a successful render.
  * Use any of the mesh classes for this purpose.
  */
-class TriangleList
+class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
 {
     /**
      * Reserve space for given number of triangles to avoid large number
@@ -39,7 +40,7 @@ class TriangleList
         // If the list is already ready, no more vertices can be added
         if(this.isReady)
         {
-            throw IllegalStateException("Can't add vertex to TriangleList that was already built")
+            throw IllegalStateException("Can't add vertex to VertexList that was already built")
         }
 
         this.vertices.add(vtx)
@@ -55,7 +56,7 @@ class TriangleList
         // If the list is already ready, no more vertices can be added
         if(this.isReady)
         {
-            throw IllegalStateException("Can't add vertices to TriangleList that was already built")
+            throw IllegalStateException("Can't add vertices to VertexList that was already built")
         }
 
         this.vertices.addAll(vtxs)
@@ -251,12 +252,11 @@ class TriangleList
         GLES31.glBindVertexArray(this.vaoHandle)
 
         // Draw all triangles in this list.
-        GLES31.glDrawArrays(GLES31.GL_TRIANGLES, 0, this.vertices.size)
+        GLES31.glDrawArrays(this.primitiveType.nativeValue, 0, this.vertices.size)
 
         // Deactivate VAO to avoid interference with other rendering jobs afterwards
         GLES31.glBindVertexArray(GLES31.GL_NONE)
     }
-
 
     /**
      * The size of a float value, in bytes

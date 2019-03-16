@@ -23,6 +23,11 @@ class TestApplication (context: Context): Application(context)
     private lateinit var screen: ScreenTarget
 
     /**
+     * The coordinate system visualizer
+     */
+    private lateinit var coordinateSystem: CoordinateSystem
+
+    /**
      * The current rotation angle
      */
     private var angle = 0.0f
@@ -31,7 +36,7 @@ class TestApplication (context: Context): Application(context)
      * The camera that will capture our scene
      */
     private val camera: Camera = Camera(
-            Vector3f(5f, 5f, 0f),
+            Vector3f(5f, 4f, 5f),
             Vector3f(),
             Vector3f(Axis.Y),
             90f,
@@ -55,6 +60,9 @@ class TestApplication (context: Context): Application(context)
 
         // The mesh also has to be recreate, in case it has been uploaded before
         this.mesh = CubeMesh()
+
+        // Create the coordinate system
+        this.coordinateSystem = CoordinateSystem()
     }
 
     override fun onFrame(elapsedSeconds: Double)
@@ -73,8 +81,16 @@ class TestApplication (context: Context): Application(context)
         // Begin rendering to main screen
         this.screen.beginRender()
 
+        // First render the coordinate system
+        this.coordinateSystem.render(this.camera.toRenderParams().apply { scale(2.5f) })
+
         // Render our mesh
-        this.mesh.render(this.camera.toRenderParams().apply { rotateY(angle); scale(2.5f) })
+        this.mesh.render(this.camera.toRenderParams().apply {
+            scale(2.0f)
+            rotateY(angle)
+            translate(Vector3f(-.5f, 0f,-.5f))
+
+        })
 
         // Begin rendering to main screen
         this.screen.endRender()
