@@ -261,7 +261,7 @@ class TriangleList
     /**
      * The size of a float value, in bytes
      */
-    val SIZE_FLOAT = 4
+    private val SIZE_FLOAT = 4
 
     /**
      * All vertices in this triangle list
