@@ -10,6 +10,9 @@ import org.joml.Vector4f
  */
 enum class VoxelFace(private val vertexData: Collection<VertexData>)
 {
+    // TODO: make class VoxelFace for a single face, and then enum VoxelFaces.
+    // TODO: then make class VoxelFace implement VertexStructure
+
     North(listOf(
             VertexData(Vector3f(1f, 1f, 1f), Vector3f(Axis.X)),
             VertexData(Vector3f(1f, 0f, 0f), Vector3f(Axis.X)),
