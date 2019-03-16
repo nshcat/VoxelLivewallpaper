@@ -7,6 +7,7 @@ import com.voxel.android.rendering.*
 import junit.framework.Test
 import org.joml.Vector3f
 import java.util.*
+import kotlin.math.PI
 
 class TestApplication (context: Context): Application(context)
 {
@@ -20,6 +21,11 @@ class TestApplication (context: Context): Application(context)
      * The screen as our sole render target
      */
     private lateinit var screen: ScreenTarget
+
+    /**
+     * The current rotation angle
+     */
+    private var angle = 0.0f
 
     /**
      * The camera that will capture our scene
@@ -58,6 +64,9 @@ class TestApplication (context: Context): Application(context)
         if(!::screen.isInitialized || !::mesh.isInitialized )
             return
 
+        // Update rotation angle
+        this.angle += (elapsedSeconds.toFloat() * 1.0f * PI.toFloat())
+
         // Update our camera
         this.camera.update(elapsedSeconds)
 
@@ -65,7 +74,7 @@ class TestApplication (context: Context): Application(context)
         this.screen.beginRender()
 
         // Render our mesh
-        this.mesh.render(this.camera.toRenderParams())
+        this.mesh.render(this.camera.toRenderParams().apply { rotateY(angle); scale(2.5f) })
 
         // Begin rendering to main screen
         this.screen.endRender()

@@ -54,10 +54,40 @@ class RenderParams (val view: Matrix4f,  val projection: Matrix4f)
     /**
      * Add a translation to the current model matrix
      *
-     * @vec Vector to translate by
+     * @param vec Vector to translate by
      */
     fun translate(vec: Vector3f)
     {
-        model *= Matrix4f().translation(vec)
+        this.model *= Matrix4f().translation(vec)
+    }
+
+    /**
+     * Rotate around the Z-axis by given angle
+     *
+     * @param angle Angle to rotate by, in radians
+     */
+    fun rotateZ(angle: Float)
+    {
+        this.model *= Matrix4f().rotateZ(angle)
+    }
+
+    /**
+     * Rotate around the Y-axis by given angle
+     *
+     * @param angle Angle to rotate by, in radians
+     */
+    fun rotateY(angle: Float)
+    {
+        this.model *= Matrix4f().rotateY(angle)
+    }
+
+    /**
+     * Apply uniform scaling to model
+     *
+     * @param factor Scaling factor
+     */
+    fun scale(factor: Float)
+    {
+        this.model *= Matrix4f().scale(factor)
     }
 }
