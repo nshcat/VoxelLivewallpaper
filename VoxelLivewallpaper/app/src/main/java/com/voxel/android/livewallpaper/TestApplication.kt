@@ -59,7 +59,7 @@ class TestApplication (context: Context): Application(context)
         this.screen = ScreenTarget()
 
         // The mesh also has to be recreate, in case it has been uploaded before
-        this.mesh = CubeMesh()
+        this.mesh = CubeMesh().apply { scale = 2.0f; translation = Vector3f(-.5f, 0f,-.5f) }
 
         // Create the coordinate system
         this.coordinateSystem = CoordinateSystem()
@@ -73,7 +73,7 @@ class TestApplication (context: Context): Application(context)
             return
 
         // Update rotation angle
-        this.angle += (elapsedSeconds.toFloat() * 1.0f * PI.toFloat())
+        this.mesh.rotationY += (elapsedSeconds.toFloat() * 1.0f * PI.toFloat())
 
         // Update our camera
         this.camera.update(elapsedSeconds)
@@ -85,12 +85,7 @@ class TestApplication (context: Context): Application(context)
         this.coordinateSystem.render(this.camera.toRenderParams().apply { scale(2.5f) })
 
         // Render our mesh
-        this.mesh.render(this.camera.toRenderParams().apply {
-            scale(2.0f)
-            rotateY(angle)
-            translate(Vector3f(-.5f, 0f,-.5f))
-
-        })
+        this.mesh.render(this.camera.toRenderParams())
 
         // Begin rendering to main screen
         this.screen.endRender()

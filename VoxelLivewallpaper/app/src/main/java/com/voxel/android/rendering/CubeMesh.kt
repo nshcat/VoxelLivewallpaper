@@ -6,7 +6,7 @@ import org.joml.Vector4f
 /**
  * A mesh containing a single cube.
  */
-class CubeMesh (var position: Vector3f = Vector3f()): TransformableMesh(SimpleMaterial())
+class CubeMesh: TransformedMesh(SimpleMaterial())
 {
     /**
      * Populate the vertex list with all voxel face vertices
@@ -16,14 +16,5 @@ class CubeMesh (var position: Vector3f = Vector3f()): TransformableMesh(SimpleMa
         enumValues<VoxelFace>().forEach {
             this.vertices.addVertices(it.toVertices(Vector4f(0.7f, 0f, 1f, 1f)))
         }
-    }
-
-    /**
-     * Transform mesh by the given translation
-     */
-    override fun transform(params: RenderParams)
-    {
-        // Apply translation by vector position
-        params.translate(this.position)
     }
 }

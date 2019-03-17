@@ -2,6 +2,7 @@ package com.voxel.android.rendering
 
 import org.joml.Matrix3f
 import org.joml.Matrix4f
+import org.joml.Quaternionf
 import org.joml.Vector3f
 import java.util.*
 
@@ -82,6 +83,27 @@ class RenderParams (val view: Matrix4f,  val projection: Matrix4f)
     }
 
     /**
+     * Rotate around the X-axis by given angle
+     *
+     * @param angle Angle to rotate by, in radians
+     */
+    fun rotateX(angle: Float)
+    {
+        this.model *= Matrix4f().rotateX(angle)
+    }
+
+    /**
+     * Rotate by given quaternion
+     *
+     * @param rot Rotation expressed as quaternion
+     */
+    fun rotate(rot: Quaternionf)
+    {
+        this.model *= Matrix4f().rotate(rot)
+    }
+
+
+    /**
      * Apply uniform scaling to model
      *
      * @param factor Scaling factor
@@ -89,5 +111,35 @@ class RenderParams (val view: Matrix4f,  val projection: Matrix4f)
     fun scale(factor: Float)
     {
         this.model *= Matrix4f().scale(factor)
+    }
+
+    /**
+     * Apply scaling in X direction to model
+     *
+     * @param factor Scaling factor
+     */
+    fun scaleX(factor: Float)
+    {
+        this.model *= Matrix4f().scale(factor, 1f, 1f)
+    }
+
+    /**
+     * Apply scaling in Y direction to model
+     *
+     * @param factor Scaling factor
+     */
+    fun scaleY(factor: Float)
+    {
+        this.model *= Matrix4f().scale(1f, factor, 1f)
+    }
+
+    /**
+     * Apply scaling in Z direction to model
+     *
+     * @param factor Scaling factor
+     */
+    fun scaleZ(factor: Float)
+    {
+        this.model *= Matrix4f().scale(1f, 1f, factor)
     }
 }
