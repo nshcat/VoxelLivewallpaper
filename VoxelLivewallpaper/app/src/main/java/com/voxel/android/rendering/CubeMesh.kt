@@ -6,13 +6,8 @@ import org.joml.Vector4f
 /**
  * A mesh containing a single cube.
  */
-class CubeMesh (var position: Vector3f = Vector3f()): Mesh(SimpleMaterial())
+class CubeMesh (var position: Vector3f = Vector3f()): TransformableMesh(SimpleMaterial())
 {
-    /**
-     * The triangle list used to hold all vertices of the cube mesh
-     */
-    protected val vertices = VertexList()
-
     /**
      * Populate the vertex list with all voxel face vertices
      */
@@ -24,27 +19,11 @@ class CubeMesh (var position: Vector3f = Vector3f()): Mesh(SimpleMaterial())
     }
 
     /**
-     * Render the cube mesh to screen
+     * Transform mesh by the given translation
      */
-    override fun render(params: RenderParams)
+    override fun transform(params: RenderParams)
     {
-        // Build mesh if needed
-        if(!this.vertices.isReady)
-            this.vertices.upload()
-
-        // Save current model matrix
-        params.pushMatrix()
-
-        // Apply translation
+        // Apply translation by vector position
         params.translate(this.position)
-
-        // Activate and set up material
-        super.render(params)
-
-        // Render all triangles in the underlying triangle list
-        this.vertices.render()
-
-        // Restore previous matrix state
-        params.popMatrix()
     }
 }
