@@ -14,6 +14,9 @@ import java.util.*
  */
 class RenderParams (val view: Matrix4f,  val projection: Matrix4f)
 {
+    // TODO: In all methods, check if the transformation is the identity function (e.g. scaling of 1.0)
+    // TODO: and if so, dont do anything
+
     /**
      * The current model matrix.
      */
