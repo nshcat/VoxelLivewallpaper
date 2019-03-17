@@ -1,6 +1,6 @@
 package com.voxel.android.rendering
 
-import org.joml.Vector3f
+import com.voxel.android.rendering.materials.SimpleMaterial
 import org.joml.Vector4f
 
 /**
@@ -14,7 +14,7 @@ class CubeMesh: TransformedMesh(SimpleMaterial())
     init
     {
         enumValues<VoxelFace>().forEach {
-            this.vertices.addVertices(it.toVertices(Vector4f(0.7f, 0f, 1f, 1f)))
+            this.vertices.addVertices(it.toVertices(Vector4f(0.09f, 0.59f, 0.13f, 1f)))
         }
     }
 }

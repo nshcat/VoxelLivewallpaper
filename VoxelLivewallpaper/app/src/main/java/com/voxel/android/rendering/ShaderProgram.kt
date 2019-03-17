@@ -68,9 +68,11 @@ class ShaderProgram (vararg shaders: Shader)
      */
     fun applyParameters(rp: RenderParams)
     {
+        this.use()
         uniformMat4f(this, "projection", rp.projection)
         uniformMat4f(this, "view", rp.view)
         uniformMat4f(this, "model", rp.model)
+        uniformMat3f(this, "normalTransform", rp.normalTransform)
     }
 
     /**

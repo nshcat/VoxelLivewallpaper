@@ -13,6 +13,6 @@ void main()
     if (!gl_FrontFacing)
         n = -n;
 
-    color = fragmentColor;
-    //color = fragmentColor * (1.0 + dot(normalize(vec3(1.0) - fragmentPosition), n));
+    //color = fragmentColor;
+    color = fragmentColor * (1.0 + dot(normalize(vec3(1.0) - fragmentPosition), n));
 }

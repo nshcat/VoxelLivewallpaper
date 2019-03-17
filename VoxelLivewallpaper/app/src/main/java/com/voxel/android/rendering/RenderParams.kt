@@ -23,6 +23,26 @@ class RenderParams (val view: Matrix4f,  val projection: Matrix4f)
     var model: Matrix4f = Matrix4f()
 
     /**
+     * The current normal vector transformation matrix. This is derived from the model matrix.
+     */
+    val normalTransform: Matrix3f
+        get() {
+
+            // We disregard translations when adjusting normal vectors, so just extract
+            // the upper 3x3 matrix here
+            val dest = Matrix3f()
+            this.model.get3x3(dest)
+
+            // According to literature, just inverting and then transposing the matrix will
+            // result in a correct normal transformation matrix that also can deal with
+            // non-uniform scaling
+            dest.invert()
+            dest.transpose()
+
+            return dest
+        }
+
+    /**
      * The matrix stack used to implement hierarchical transformations
      */
     protected var stack: Deque<Matrix4f> = ArrayDeque()

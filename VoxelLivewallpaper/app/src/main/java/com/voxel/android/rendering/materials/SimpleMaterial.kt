@@ -1,4 +1,6 @@
-package com.voxel.android.rendering
+package com.voxel.android.rendering.materials
+
+import com.voxel.android.rendering.*
 
 /**
  * A simple material that ignores all light sources in the scene and applies a faux lighting

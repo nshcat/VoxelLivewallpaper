@@ -17,9 +17,8 @@ uniform mat3 normalTransform;
 
 void main()
 {
+    fragmentNormal = normalTransform * vertexNormal;
     fragmentColor = vertexColor;
     vec4 vPos = vec4(vertexPosition, 1.0f);
-    fragmentPosition = (view * model * vPos).xyz;
-    fragmentNormal = normalTransform * vertexNormal;
     gl_Position = projection * view * model * vPos;
 }

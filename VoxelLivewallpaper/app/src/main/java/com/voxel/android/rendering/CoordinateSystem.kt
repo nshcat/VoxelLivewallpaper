@@ -1,13 +1,15 @@
 package com.voxel.android.rendering
 
 import android.opengl.GLES31
+import com.voxel.android.rendering.materials.SimpleMaterial
+import com.voxel.android.rendering.materials.SolidColor
 import org.joml.Vector4f
 import org.joml.Vector3f
 
 /**
  * A class used to render a simple coordinate system into the scene.
  */
-class CoordinateSystem: Mesh(SimpleMaterial())
+class CoordinateSystem: Mesh(SolidColor())
 {
     /**
      * The underlying vertex list used to render the axises. We are cheating a bit here
