@@ -4,9 +4,7 @@ import android.content.Context
 import com.voxel.android.application.Application
 import com.voxel.android.application.ScreenDimensions
 import com.voxel.android.rendering.*
-import junit.framework.Test
 import org.joml.Vector3f
-import java.util.*
 import kotlin.math.PI
 
 class TestApplication (context: Context): Application(context)
