@@ -1,6 +1,8 @@
 package com.voxel.android.livewallpaper
 
 import android.content.Context
+import android.opengl.GLES31Ext
+import android.util.Log
 import com.voxel.android.application.Application
 import com.voxel.android.application.ScreenDimensions
 import com.voxel.android.rendering.*
@@ -56,7 +58,7 @@ class TestApplication (context: Context): Application(context)
         if(::mesh.isInitialized)
         {
             // Force the screen to resize
-            this.firstPass.updateDimensions(screenDimensions.scaleDown(8.0f))
+            this.firstPass.updateDimensions(screenDimensions.scaleDown(3.0f))
             this.secondPass.updateDimensions(screenDimensions)
             this.camera.refreshProjection(screenDimensions)
         }

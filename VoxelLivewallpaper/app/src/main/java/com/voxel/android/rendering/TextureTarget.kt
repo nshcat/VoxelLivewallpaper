@@ -44,7 +44,7 @@ class TextureTarget: RenderTarget()
     }
 
     /**
-     * Handle screen resize by resizing the dimensions of the underlying texture
+     * Handle screen resize by resizing the dimensions of the underlying texture and depth buffer
      *
      * @param renderDimensions The new screen dimensions
      */
@@ -69,17 +69,6 @@ class TextureTarget: RenderTarget()
                 this.texture.recreate(parameters)
             }
 
-            // Whatever path was taken, we now have a new texture with the correct dimensions.
-            // We can now attach it to the FBO.
-            GLES31.glBindFramebuffer(GLES31.GL_FRAMEBUFFER, this.fboHandle)
-
-            // Make sure the texture is activated
-            this.texture.use(TextureUnit.Unit0)
-
-            // Associate it with the frame buffer object
-            GLES31.glFramebufferTexture2D(GLES31.GL_FRAMEBUFFER, GLES31.GL_COLOR_ATTACHMENT0,
-                    GLES31.GL_TEXTURE_2D, this.texture.handle, 0)
-
             // We also need a new depth buffer.
             // Destroy it if it already exists
             if(this.depthBufferHandle != GLES31.GL_NONE)
@@ -103,13 +92,29 @@ class TextureTarget: RenderTarget()
             // Assign handle
             this.depthBufferHandle = renderBuffers[0]
 
+            // Activate the FBO
+            GLES31.glBindFramebuffer(GLES31.GL_FRAMEBUFFER, this.fboHandle)
+
             // Attach it to our framebuffer object
             GLES31.glBindRenderbuffer(GLES31.GL_RENDERBUFFER, this.depthBufferHandle)
-            GLES31.glRenderbufferStorage(GLES31.GL_RENDERBUFFER, GLES31.GL_DEPTH_COMPONENT,
+            GLES31.glRenderbufferStorage(GLES31.GL_RENDERBUFFER, GLES31.GL_DEPTH_COMPONENT24,
                     this.renderDimensions.width, this.renderDimensions.height)
 
+            // Whatever path was taken, we now have a new texture with the correct dimensions.
+            // We can now attach it to the FBO.
             GLES31.glFramebufferRenderbuffer(GLES31.GL_FRAMEBUFFER, GLES31.GL_DEPTH_ATTACHMENT,
                     GLES31.GL_RENDERBUFFER, this.depthBufferHandle)
+
+            // Make sure the texture is activated
+            this.texture.use(TextureUnit.Unit0)
+
+            // Associate it with the frame buffer object
+            GLES31.glFramebufferTexture2D(GLES31.GL_FRAMEBUFFER, GLES31.GL_COLOR_ATTACHMENT0,
+                    GLES31.GL_TEXTURE_2D, this.texture.handle, 0)
+
+            // Set up draw buffers. It works without this, but might be needed on other devices
+            val drawBuffers = intArrayOf(GLES31.GL_COLOR_ATTACHMENT0)
+            GLES31.glDrawBuffers(1, drawBuffers, 0)
 
             // Check for success
             if(GLES31.glCheckFramebufferStatus(GLES31.GL_FRAMEBUFFER) != GLES31.GL_FRAMEBUFFER_COMPLETE)
