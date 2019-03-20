@@ -47,6 +47,14 @@ class RenderParams (val view: Matrix4f,  val projection: Matrix4f)
      */
     protected var stack: Deque<Matrix4f> = ArrayDeque()
 
+    companion object
+    {
+        /**
+         * Create empty render parameters for use with materials that dont care about the matrices
+         */
+        fun empty() = RenderParams(Matrix4f(), Matrix4f())
+    }
+
     /**
      * Replace current model matrix with the topmost matrix on the stack and
      * popping that matrix.

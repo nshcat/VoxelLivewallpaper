@@ -16,14 +16,24 @@ class TestApplication (context: Context): Application(context)
     private lateinit var mesh: CubeMesh
 
     /**
-     * The screen as our sole render target
+     * A texture render target as our first render pass
      */
-    private lateinit var screen: ScreenTarget
+    private lateinit var firstPass: TextureTarget
+
+    /**
+     * The screen as our second render pass
+     */
+    private lateinit var secondPass: ScreenTarget
 
     /**
      * The coordinate system visualizer
      */
     private lateinit var coordinateSystem: CoordinateSystem
+
+    /**
+     * A full screen quad we use to render the scene to screen in the second pass
+     */
+    private lateinit var fullscreenQuad: FullscreenQuad
 
     /**
      * The current rotation angle
@@ -46,7 +56,8 @@ class TestApplication (context: Context): Application(context)
         if(::mesh.isInitialized)
         {
             // Force the screen to resize
-            this.screen.updateDimensions(screenDimensions)
+            this.firstPass.updateDimensions(screenDimensions.scaleDown(8.0f))
+            this.secondPass.updateDimensions(screenDimensions)
             this.camera.refreshProjection(screenDimensions)
         }
     }
@@ -54,10 +65,14 @@ class TestApplication (context: Context): Application(context)
     override fun onScreenCreated()
     {
         // The render target might also have OpenGL state that needs to be lazily created
-        this.screen = ScreenTarget()
+        this.firstPass = TextureTarget()
+        this.secondPass = ScreenTarget()
 
         // The mesh also has to be recreate, in case it has been uploaded before
         this.mesh = CubeMesh().apply { scale = 2.0f; translation = Vector3f(-.5f, 0f,-.5f) }
+
+        // Create the fullscreen quad
+        this.fullscreenQuad = FullscreenQuad()
 
         // Create the coordinate system
         this.coordinateSystem = CoordinateSystem()
@@ -67,7 +82,7 @@ class TestApplication (context: Context): Application(context)
     {
         // It might happen that we are requested to draw a frame while we havent been initialized.
         // Prohibit that.
-        if(!::screen.isInitialized || !::mesh.isInitialized )
+        if(!::firstPass.isInitialized || !::mesh.isInitialized )
             return
 
         // Update rotation angle
@@ -76,8 +91,8 @@ class TestApplication (context: Context): Application(context)
         // Update our camera
         this.camera.update(elapsedSeconds)
 
-        // Begin rendering to main screen
-        this.screen.beginRender()
+        // Begin rendering to texture
+        this.firstPass.beginRender()
 
         // First render the coordinate system
         this.coordinateSystem.render(this.camera.toRenderParams().apply { scale(2.5f) })
@@ -86,6 +101,20 @@ class TestApplication (context: Context): Application(context)
         this.mesh.render(this.camera.toRenderParams())
 
         // Begin rendering to main screen
-        this.screen.endRender()
+        this.firstPass.endRender()
+
+        // Now do the second rendering pass where we render to a full screen quad
+        this.secondPass.beginRender()
+
+        // Use the texture the first pass rendered to. The full screen quad material
+        // expects it to be bound to the first texture unit.
+        this.firstPass.texture.use(TextureUnit.Unit0)
+
+        // Render the fullscreen quad. The material doesnt use any of the rendering parameters,
+        // so we just pass an empty instance here.
+        this.fullscreenQuad.render(RenderParams.empty())
+
+        // Finish rendering
+        this.secondPass.endRender()
     }
 }

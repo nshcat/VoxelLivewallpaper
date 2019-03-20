@@ -102,6 +102,22 @@ fun uniformVec4f(program: ShaderProgram, name: String, vec: Vector4f)
 }
 
 /**
+ * Upload a single integer as uniform value
+ *
+ * @param program Shader program the uniform is contained in
+ * @param name Uniform name
+ * @param value Value to upload
+ */
+fun uniformInt(program: ShaderProgram, name: String, value: Int)
+{
+    // Try to find the uniform location
+    val location = checkedUniformLocation(program, name)
+
+    // Upload contents
+    GLES31.glUniform1i(location, value)
+}
+
+/**
  * Allocate a float buffer for use with uniform upload
  *
  * @param size Size of the buffer in number of floats

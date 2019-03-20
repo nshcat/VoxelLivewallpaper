@@ -18,6 +18,17 @@ class ScreenDimensions(val width: Int, val height: Int)
      */
     fun isEmpty(): Boolean = this.width == 0 && this.height == 0
 
+    /**
+     * Obtain a new screen dimensions instance with scaled-down width and height.
+     *
+     * @param factor The scaling factor. The dimensions will be divided by this.
+     * This means a value of 2.0 will result in half the resolution in both width and height.
+     */
+    fun scaleDown(factor: Float): ScreenDimensions
+    {
+        return ScreenDimensions((this.width.toFloat() / factor).toInt(), (this.height.toFloat() / factor).toInt())
+    }
+
     companion object
     {
         /**

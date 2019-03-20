@@ -2,9 +2,15 @@
 
 precision mediump float;
 
+
+uniform sampler2D srcTexture;
+
 layout (location = 0) out vec4 fragmentColor;
+
+in vec2 texCoords;
+
 
 void main()
 {
-	fragmentColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	fragmentColor = texture(srcTexture, texCoords);
 }
