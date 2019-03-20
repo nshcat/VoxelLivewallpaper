@@ -100,8 +100,7 @@ class TextureTarget: RenderTarget()
             GLES31.glRenderbufferStorage(GLES31.GL_RENDERBUFFER, GLES31.GL_DEPTH_COMPONENT24,
                     this.renderDimensions.width, this.renderDimensions.height)
 
-            // Whatever path was taken, we now have a new texture with the correct dimensions.
-            // We can now attach it to the FBO.
+            // We generated a new texture earlier, which now has to be attached to the FBO.
             GLES31.glFramebufferRenderbuffer(GLES31.GL_FRAMEBUFFER, GLES31.GL_DEPTH_ATTACHMENT,
                     GLES31.GL_RENDERBUFFER, this.depthBufferHandle)
 
