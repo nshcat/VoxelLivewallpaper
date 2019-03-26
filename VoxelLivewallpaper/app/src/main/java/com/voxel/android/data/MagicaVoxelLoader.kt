@@ -136,7 +136,7 @@ class MagicaVoxelLoader: VoxelModelLoader
             val bf = b.toFloat() / 255f
             val af = a.toFloat() / 255f
 
-            palette.colors[i] = Color(rf, gf, bf, af)
+            palette.colors[i+1] = Color(rf, gf, bf, af)
         }
 
         // All done

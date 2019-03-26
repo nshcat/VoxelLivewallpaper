@@ -43,6 +43,11 @@ class TestApplication (context: Context): Application(context)
     private lateinit var fullscreenQuad: FullscreenQuad
 
     /**
+     * The voxel mesh used to test the voxel model loader
+     */
+    private lateinit var testVoxelMesh: VoxelMesh
+
+    /**
      * The current rotation angle
      */
     private var angle = 0.0f
@@ -63,7 +68,7 @@ class TestApplication (context: Context): Application(context)
         if(::mesh.isInitialized)
         {
             // Force the screen to resize
-            this.firstPass.updateDimensions(screenDimensions.scaleDown(3.0f))
+            this.firstPass.updateDimensions(screenDimensions.scaleDown(1.0f))
             this.secondPass.updateDimensions(screenDimensions)
             this.camera.refreshProjection(screenDimensions)
         }
@@ -84,11 +89,13 @@ class TestApplication (context: Context): Application(context)
         // Create the coordinate system
         this.coordinateSystem = CoordinateSystem()
 
+        // Test the voxel model loader
         val modelLoader = MagicaVoxelLoader()
-
         val model = modelLoader.load(
-                this.context.resources.openRawResource(R.raw.test)
+                this.context.resources.openRawResource(R.raw.horse)
         )
+
+        this.testVoxelMesh = VoxelMesh(model.frames[0], model.palette)
     }
 
     override fun onFrame(elapsedSeconds: Double)
@@ -111,7 +118,10 @@ class TestApplication (context: Context): Application(context)
         this.coordinateSystem.render(this.camera.toRenderParams().apply { scale(2.5f) })
 
         // Render our mesh
-        this.mesh.render(this.camera.toRenderParams())
+        //this.mesh.render(this.camera.toRenderParams())
+
+        // Render the other mesh
+        this.testVoxelMesh.render(this.camera.toRenderParams().apply { scale(0.25f); rotateY( Math.PI.toFloat() / 4f); translate(Vector3f(-12f, 0f, 0f)) })
 
         // Begin rendering to main screen
         this.firstPass.endRender()

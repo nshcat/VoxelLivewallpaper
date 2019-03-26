@@ -148,5 +148,5 @@ private fun checkedUniformLocation(program: ShaderProgram, name: String): Int
         Log.e("setUniform", "Unknown uniform location: \"$name\"")
         throw IllegalArgumentException("unknown uniform location")
     }
-    else return location;
+    else return location
 }
