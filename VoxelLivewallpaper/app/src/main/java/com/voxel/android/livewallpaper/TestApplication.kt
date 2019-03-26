@@ -3,10 +3,15 @@ package com.voxel.android.livewallpaper
 import android.content.Context
 import android.opengl.GLES31Ext
 import android.util.Log
+import com.voxel.android.R
 import com.voxel.android.application.Application
 import com.voxel.android.application.ScreenDimensions
+import com.voxel.android.data.MagicaVoxelLoader
+import com.voxel.android.data.VoxelModelLoader
 import com.voxel.android.rendering.*
 import org.joml.Vector3f
+import java.io.BufferedInputStream
+import java.nio.Buffer
 import kotlin.math.PI
 
 class TestApplication (context: Context): Application(context)
@@ -78,6 +83,12 @@ class TestApplication (context: Context): Application(context)
 
         // Create the coordinate system
         this.coordinateSystem = CoordinateSystem()
+
+        val modelLoader = MagicaVoxelLoader()
+
+        val model = modelLoader.load(
+                this.context.resources.openRawResource(R.raw.test)
+        )
     }
 
     override fun onFrame(elapsedSeconds: Double)
