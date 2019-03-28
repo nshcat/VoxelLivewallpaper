@@ -33,7 +33,7 @@ class VoxelMesh(model: VoxelModelFrame, palette: Palette): TransformedMesh(Simpl
                         val voxelColor = palette.colorAt(model.colorIndexAt(ix, iy, iz))
 
                         // Create translation vector. Each voxel is supposed to be 1x1x1 units big.
-                        val translation = Vector3f(ix.toFloat(), iy.toFloat(), iz.toFloat())
+                        val translation = Vector3f(ix.toFloat() - dimensions.width.toFloat() / 2f, iy.toFloat(), iz.toFloat() - dimensions.depth.toFloat() / 2f)
 
                         // Create all faces of the cube for now (this can be optimized a lot!)
                         enumValues<VoxelFace>().forEach {

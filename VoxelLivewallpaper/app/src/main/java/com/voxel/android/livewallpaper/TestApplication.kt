@@ -8,6 +8,8 @@ import com.voxel.android.application.Application
 import com.voxel.android.application.ScreenDimensions
 import com.voxel.android.data.MagicaVoxelLoader
 import com.voxel.android.data.VoxelModelLoader
+import com.voxel.android.procedual.TerrainDimensions
+import com.voxel.android.procedual.VoxelTerrain
 import com.voxel.android.rendering.*
 import org.joml.Vector3f
 import java.io.BufferedInputStream
@@ -46,6 +48,11 @@ class TestApplication (context: Context): Application(context)
      * The voxel mesh used to test the voxel model loader
      */
     private lateinit var testVoxelMesh: VoxelMesh
+
+    /**
+     * Test voxel terrain
+     */
+    private lateinit var terrain: VoxelTerrain
 
     /**
      * The current rotation angle
@@ -92,10 +99,18 @@ class TestApplication (context: Context): Application(context)
         // Test the voxel model loader
         val modelLoader = MagicaVoxelLoader()
         val model = modelLoader.load(
-                this.context.resources.openRawResource(R.raw.horse)
+                this.context.resources.openRawResource(R.raw.fox)
         )
 
-        this.testVoxelMesh = VoxelMesh(model.frames[0], model.palette)
+        this.testVoxelMesh = VoxelMesh(model.frames[0], model.palette).apply { scale = 0.25f }
+
+        // Test voxel terrain
+        this.terrain = VoxelTerrain(
+                TerrainDimensions(3f, 3f),
+                50f,
+                1f,
+                0.5f
+        ).apply { scale *= 2 }
     }
 
     override fun onFrame(elapsedSeconds: Double)
@@ -108,6 +123,8 @@ class TestApplication (context: Context): Application(context)
         // Update rotation angle
         this.mesh.rotationY += (elapsedSeconds.toFloat() * 1.0f * PI.toFloat())
 
+        this.testVoxelMesh.rotationY += (elapsedSeconds.toFloat() * 1.0f * PI.toFloat())
+
         // Update our camera
         this.camera.update(elapsedSeconds)
 
@@ -115,13 +132,14 @@ class TestApplication (context: Context): Application(context)
         this.firstPass.beginRender()
 
         // First render the coordinate system
-        this.coordinateSystem.render(this.camera.toRenderParams().apply { scale(2.5f) })
+        //this.coordinateSystem.render(this.camera.toRenderParams().apply { scale(2.5f) })
 
         // Render our mesh
         //this.mesh.render(this.camera.toRenderParams())
 
         // Render the other mesh
-        this.testVoxelMesh.render(this.camera.toRenderParams().apply { scale(0.25f); rotateY( Math.PI.toFloat() / 4f); translate(Vector3f(-12f, 0f, 0f)) })
+        //this.testVoxelMesh.render(this.camera.toRenderParams())
+        this.terrain.render(this.camera.toRenderParams())
 
         // Begin rendering to main screen
         this.firstPass.endRender()

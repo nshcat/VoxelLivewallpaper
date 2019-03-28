@@ -14,5 +14,5 @@ void main()
         n = -n;
 
     //color = fragmentColor;
-    color = fragmentColor * (1.0 + dot(normalize(vec3(1.0) - fragmentPosition), n));
+    color = fragmentColor * (0.4 + dot(normalize(vec3(1.0) - fragmentPosition), n));
 }
