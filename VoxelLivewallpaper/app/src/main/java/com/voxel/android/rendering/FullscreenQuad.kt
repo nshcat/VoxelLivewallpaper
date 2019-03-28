@@ -1,6 +1,6 @@
 package com.voxel.android.rendering
 
-import android.opengl.GLES31
+import android.opengl.GLES30
 import com.voxel.android.rendering.materials.FullscreenQuadMaterial
 
 /**
@@ -15,6 +15,6 @@ class FullscreenQuad: Mesh(FullscreenQuadMaterial())
 
         // Render the quad using instancing. The material shader will generate the vertices
         // for use based on the instance vertex id.
-        GLES31.glDrawArraysInstanced(GLES31.GL_TRIANGLES, 0, 6, 1)
+        GLES30.glDrawArraysInstanced(GLES30.GL_TRIANGLES, 0, 6, 1)
     }
 }

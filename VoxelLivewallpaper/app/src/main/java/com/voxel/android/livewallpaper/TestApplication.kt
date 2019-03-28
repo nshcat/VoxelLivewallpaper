@@ -1,7 +1,6 @@
 package com.voxel.android.livewallpaper
 
 import android.content.Context
-import android.opengl.GLES31Ext
 import android.util.Log
 import com.voxel.android.R
 import com.voxel.android.application.Application

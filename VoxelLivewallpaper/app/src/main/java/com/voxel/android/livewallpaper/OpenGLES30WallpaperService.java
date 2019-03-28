@@ -6,7 +6,7 @@ import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView.Renderer;
 import android.view.SurfaceHolder;
 
-public abstract class OpenGLES31WallpaperService extends GLWallpaperService {
+public abstract class OpenGLES30WallpaperService extends GLWallpaperService {
 	@Override
 	public Engine onCreateEngine() {
 		return new OpenGLES2Engine();
@@ -22,7 +22,7 @@ public abstract class OpenGLES31WallpaperService extends GLWallpaperService {
 			final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 			final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
 
-			final boolean supportsEs31 = configurationInfo.reqGlEsVersion >= 0x30001;
+			final boolean supportsEs31 = configurationInfo.reqGlEsVersion >= 0x30000;
 			
 			if (supportsEs31)
 			{

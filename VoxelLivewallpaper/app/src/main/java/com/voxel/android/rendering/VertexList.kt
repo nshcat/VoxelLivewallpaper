@@ -1,6 +1,6 @@
 package com.voxel.android.rendering
 
-import android.opengl.GLES31
+import android.opengl.GLES30
 import android.util.Log
 import org.joml.Vector3f
 import org.joml.Vector4f
@@ -91,12 +91,12 @@ class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
         floatBuffer.position(0)
 
         // Bind buffer and upload position data
-        GLES31.glBindBuffer(GLES31.GL_ARRAY_BUFFER, this.vboPositionHandle)
-        GLES31.glBufferData(GLES31.GL_ARRAY_BUFFER, this.vertices.size * 3 * SIZE_FLOAT, byteBuffer, GLES31.GL_STATIC_DRAW)
+        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, this.vboPositionHandle)
+        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, this.vertices.size * 3 * SIZE_FLOAT, byteBuffer, GLES30.GL_STATIC_DRAW)
 
         // Setup VAO for this attribute
-        GLES31.glEnableVertexAttribArray(0)
-        GLES31.glVertexAttribPointer(0, 3, GLES31.GL_FLOAT, false, 0, 0)
+        GLES30.glEnableVertexAttribArray(0)
+        GLES30.glVertexAttribPointer(0, 3, GLES30.GL_FLOAT, false, 0, 0)
     }
 
     /**
@@ -129,12 +129,12 @@ class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
         floatBuffer.position(0)
 
         // Bind buffer and upload position data
-        GLES31.glBindBuffer(GLES31.GL_ARRAY_BUFFER, this.vboColorHandle)
-        GLES31.glBufferData(GLES31.GL_ARRAY_BUFFER, this.vertices.size * 4 * SIZE_FLOAT, byteBuffer, GLES31.GL_STATIC_DRAW)
+        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, this.vboColorHandle)
+        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, this.vertices.size * 4 * SIZE_FLOAT, byteBuffer, GLES30.GL_STATIC_DRAW)
 
         // Setup VAO for this attribute
-        GLES31.glEnableVertexAttribArray(1)
-        GLES31.glVertexAttribPointer(1, 4, GLES31.GL_FLOAT, false, 0, 0)
+        GLES30.glEnableVertexAttribArray(1)
+        GLES30.glVertexAttribPointer(1, 4, GLES30.GL_FLOAT, false, 0, 0)
     }
 
     /**
@@ -166,12 +166,12 @@ class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
         floatBuffer.position(0)
 
         // Bind buffer and upload position data
-        GLES31.glBindBuffer(GLES31.GL_ARRAY_BUFFER, this.vboNormalHandle)
-        GLES31.glBufferData(GLES31.GL_ARRAY_BUFFER, this.vertices.size * 3 * SIZE_FLOAT, byteBuffer, GLES31.GL_STATIC_DRAW)
+        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, this.vboNormalHandle)
+        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, this.vertices.size * 3 * SIZE_FLOAT, byteBuffer, GLES30.GL_STATIC_DRAW)
 
         // Setup VAO for this attribute
-        GLES31.glEnableVertexAttribArray(2)
-        GLES31.glVertexAttribPointer(2, 3, GLES31.GL_FLOAT, false, 0, 0)
+        GLES30.glEnableVertexAttribArray(2)
+        GLES30.glVertexAttribPointer(2, 3, GLES30.GL_FLOAT, false, 0, 0)
     }
 
     /**
@@ -182,11 +182,11 @@ class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
     protected fun createBuffer(): Int
     {
         val vboBuffer = IntArray(1)
-        GLES31.glGenBuffers(1, vboBuffer, 0)
+        GLES30.glGenBuffers(1, vboBuffer, 0)
 
         val vboHandle = vboBuffer[0]
 
-        if(vboHandle == GLES31.GL_NONE)
+        if(vboHandle == GLES30.GL_NONE)
         {
             throw IllegalStateException("Could not create VBO")
         }
@@ -214,15 +214,15 @@ class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
 
         // Create the VAO
         val vaoBuffer = IntArray(1)
-        GLES31.glGenVertexArrays(1, vaoBuffer, 0)
+        GLES30.glGenVertexArrays(1, vaoBuffer, 0)
         this.vaoHandle = vaoBuffer[0]
 
-        if(this.vaoHandle == GLES31.GL_NONE)
+        if(this.vaoHandle == GLES30.GL_NONE)
         {
             throw IllegalStateException("Could not create VAO")
         }
 
-        GLES31.glBindVertexArray(this.vaoHandle)
+        GLES30.glBindVertexArray(this.vaoHandle)
         // ===
 
         // Create the VBOs and attribute bindings
@@ -231,7 +231,7 @@ class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
         this.createNormalBuffer()
 
         // Deactivate VAO for now
-        GLES31.glBindVertexArray(0)
+        GLES30.glBindVertexArray(0)
 
         // Upload finished. Mark as ready
         this.isReady = true
@@ -249,13 +249,13 @@ class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
 
         // Activate the VAO. It includes all information about how attributes should be bound
         // to the buffers.
-        GLES31.glBindVertexArray(this.vaoHandle)
+        GLES30.glBindVertexArray(this.vaoHandle)
 
         // Draw all triangles in this list.
-        GLES31.glDrawArrays(this.primitiveType.nativeValue, 0, this.vertices.size)
+        GLES30.glDrawArrays(this.primitiveType.nativeValue, 0, this.vertices.size)
 
         // Deactivate VAO to avoid interference with other rendering jobs afterwards
-        GLES31.glBindVertexArray(GLES31.GL_NONE)
+        GLES30.glBindVertexArray(GLES30.GL_NONE)
     }
 
     /**
@@ -271,22 +271,22 @@ class VertexList(val primitiveType: PrimitiveType = PrimitiveType.Triangles)
     /**
      * OpenGL handle to the VAO
      */
-    protected var vaoHandle = GLES31.GL_NONE
+    protected var vaoHandle = GLES30.GL_NONE
 
     /**
      * OpenGL handle to the color VBO
      */
-    protected var vboColorHandle = GLES31.GL_NONE
+    protected var vboColorHandle = GLES30.GL_NONE
 
     /**
      * OpenGL handle to the normal VBO
      */
-    protected var vboNormalHandle = GLES31.GL_NONE
+    protected var vboNormalHandle = GLES30.GL_NONE
 
     /**
      * OpenGL handle to the position VBO
      */
-    protected var vboPositionHandle = GLES31.GL_NONE
+    protected var vboPositionHandle = GLES30.GL_NONE
 
     /**
      * A flag indicating whether this triangle list is ready for rendering, aka

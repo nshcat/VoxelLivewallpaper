@@ -1,6 +1,6 @@
 package com.voxel.android.rendering
 
-import android.opengl.GLES31
+import android.opengl.GLES30
 import com.voxel.android.application.ScreenDimensions
 
 /**
@@ -32,7 +32,7 @@ abstract class RenderTarget
     {
         // Since there might be any number of render targets in use, we need to always
         // set the OpenGL viewport before rendering
-        GLES31.glViewport(0, 0, this.renderDimensions.width, this.renderDimensions.height)
+        GLES30.glViewport(0, 0, this.renderDimensions.width, this.renderDimensions.height)
     }
 
     /**
