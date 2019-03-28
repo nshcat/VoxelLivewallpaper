@@ -1,6 +1,6 @@
 package com.voxel.android.rendering
 
-import android.opengl.GLES31
+import android.opengl.GLES30
 import com.voxel.android.rendering.materials.SimpleMaterial
 import com.voxel.android.rendering.materials.SolidColor
 import org.joml.Vector4f
@@ -63,7 +63,7 @@ class CoordinateSystem: Mesh(SolidColor())
         // Make sure the material is initialized and activated
         super.render(params)
 
-        GLES31.glLineWidth(3f)
+        GLES30.glLineWidth(3f)
 
         // Render our lines
         this.vertexList.render()

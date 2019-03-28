@@ -1,6 +1,6 @@
 package com.voxel.android.rendering
 
-import android.opengl.GLES31
+import android.opengl.GLES30
 
 /**
  * An enumeration describing all supported types of OpenGL shader
@@ -9,7 +9,6 @@ import android.opengl.GLES31
  */
 enum class ShaderType (val nativeValue: Int)
 {
-    VertexShader(GLES31.GL_VERTEX_SHADER),
-    FragmentShader(GLES31.GL_FRAGMENT_SHADER),
-    ComputeShader(GLES31.GL_COMPUTE_SHADER)
+    VertexShader(GLES30.GL_VERTEX_SHADER),
+    FragmentShader(GLES30.GL_FRAGMENT_SHADER)
 }
